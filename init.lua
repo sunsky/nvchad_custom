@@ -49,3 +49,4 @@ function copypath()
     -- vim.fn.setreg("+", path)
 end
 vim.keymap.set('n', '<leader>cp', copypath, { noremap = true })
+vim.o.autoread = true
