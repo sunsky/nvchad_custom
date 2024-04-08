@@ -1,6 +1,5 @@
 
 -- Predefine clipboard provider to speedup start
---
 
 vim.api.nvim_set_option("clipboard","unnamed")
 
@@ -50,3 +49,10 @@ function copypath()
 end
 vim.keymap.set('n', '<leader>cp', copypath, { noremap = true })
 vim.o.autoread = true
+
+vim.g["go_term_enabled"] = 1
+vim.g["go_term_mode"] = "split"
+vim.g["go_test_show_name"] = 1
+
+-- vim.api.nvim_set_var()
+vim.g['test#strategy'] = "neovim"

@@ -102,8 +102,7 @@ local plugins = {
 {
   'rcarriga/nvim-dap-ui',
   dependencies = {
-    'mfussenegger/nvim-dap',
-    'windwp/windline.nvim'
+    "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"
   },
   config = function()
     require("neodev").setup({
@@ -111,6 +110,7 @@ local plugins = {
     })
   end,
   lazy = false,
+  -- event = "VeryLazy"
 
 },
 {
@@ -335,12 +335,23 @@ local plugins = {
       -- For major updates, this must be adjusted manually.
       -- version = "^1.0.0",
     },
+    {
+      'ahmedkhalf/project.nvim',
+      config =function ()
+        require("project_nvim").setup({
+          manual_mode=true,
+            patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+            silent_chdir = false,
+             detection_methods = { --[[ "lsp", ]] "pattern" },
+
+        })
+      end
+    },
   },
   config = function()
     require("telescope").load_extension("live_grep_args")
-    require("telescope").setup({
-
-    })
+    require("telescope").load_extension("file_browser")
+    require("telescope").setup()
   end
 },
 {
@@ -349,8 +360,278 @@ local plugins = {
 {
   'hexdigest/gounit-vim', lazy=false,
 },
+{
+  "nvim-telescope/telescope-file-browser.nvim",
+  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+},
+require("custom.configs.toggleterm"),
+require("custom.configs.indentline"),
+require("custom.configs.treesitter-context"),
+-- install without yarn or npm
+{
+  "iamcco/markdown-preview.nvim",
+  cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+  ft = { "markdown" },
+  build = function() vim.fn["mkdp#util#install"]() end,
+},
+{
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    lazy = true,
+    event = { "User FileOpened" },
+},
+-- {
+--     "ggandor/leap.nvim",
+    -- lazy = true,
+    -- keys = { "r", "R", "W", "dr", "dR", "yr", "yR", "cr", "cR" },
+    -- config = function()
+        -- require("leap").opts.highlight_unlabeled_phase_one_targets = true
+        -- leap.add_default_mappings()
+        -- vim.keymap.set({ "x", "o", "n" }, "r", "<Plug>(leap-forward-to)")
+        -- vim.keymap.set({ "x", "o", "n" }, "R", "<Plug>(leap-backward-to)")
+        -- vim.keymap.set({ "x", "o", "n" }, "W", "<Plug>(leap-from-window)")
+    -- end,
+-- },
+{
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
+},
+-- {
+--     "zbirenbaum/neodim",
+--     lazy = true,
+--     event = "LspAttach",
+--     config = function()
+--         require("neodim").setup({
+--             alpha = 0.75,
+--             blend_color = "#000000",
+--             update_in_insert = {
+--                 enable = true,
+--                 delay = 100,
+--             },
+--             hide = {
+--                 virtual_text = true,
+--                 signs = false,
+--                 underline = false,
+--             },
+--         })
+--     end,
+-- },
+{
+  "roobert/search-replace.nvim",
+  -- lazy = false,
+  -- lazy = true,
+    cmd = {
+        "SearchReplaceSingleBufferVisualSelection",
+        "SearchReplaceWithinVisualSelection",
+        "SearchReplaceWithinVisualSelectionCWord",
+        "SearchReplaceSingleBufferSelections",
+        "SearchReplaceSingleBufferCWord",
+        "SearchReplaceSingleBufferCWORD",
+        "SearchReplaceSingleBufferCExpr",
+        "SearchReplaceSingleBufferCFile",
+        "SearchReplaceMultiBufferSelections",
+        "SearchReplaceMultiBufferOpen",
+        "SearchReplaceMultiBufferCWord",
+        "SearchReplaceMultiBufferCWORD",
+        "SearchReplaceMultiBufferCExpr",
+        "SearchReplaceMultiBufferCFile",
+    },
+  config = function()
+    require("search-replace").setup({
+      -- optionally override defaults
+      default_replace_single_buffer_options = "gcI",
+      default_replace_multi_buffer_options = "egcI",
+    })
 
-
+  end,
+},
+{
+  "nvim-treesitter/nvim-treesitter-textobjects",
+  dependencies = { "nvim-treesitter/nvim-treesitter" }
+},
+-- {
+--   "epwalsh/obsidian.nvim",
+--   version = "*",  -- recommended, use latest release instead of latest commit
+--   lazy = true,
+--   ft = "markdown",
+--   -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+--   -- event = {
+--   --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+--   --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+--   --   "BufReadPre path/to/my-vault/**.md",
+--   --   "BufNewFile path/to/my-vault/**.md",
+--   -- },
+--   dependencies = {
+--     -- Required.
+--     "nvim-lua/plenary.nvim",
+--
+--     -- see below for full list of optional dependencies 👇
+--   },
+--   opts = {
+--     workspaces = {
+--       {
+--         name = "personal",
+--         path = "~/obsidian_personal",
+--       },
+--       {
+--         name = "work",
+--         path = "~/obsidian_work",
+--       },
+--     },
+--
+--     -- see below for full list of options 👇
+--   },
+-- },
+-- {
+--   "github/copilot.vim",
+--   event = 'VeryLazy',
+-- },
+{
+  "danymat/neogen",
+  config = true,
+  -- Uncomment next line if you want to follow only stable versions
+   version = "*",
+   event = "VeryLazy",
+},
+-- {
+--   "ray-x/go.nvim",
+--   dependencies = {  -- optional packages
+--     "ray-x/guihua.lua",
+--     "neovim/nvim-lspconfig",
+--     "nvim-treesitter/nvim-treesitter",
+--   },
+--   config = function()
+--     require("go").setup()
+--   end,
+--   event = {"CmdlineEnter"},
+--   ft = {"go", 'gomod'},
+--   build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+-- },
+-- {
+--   'vim-test/vim-test',
+--   lazy = false,
+-- }
+-- {
+--   'moll/vim-bbye',
+--   lazy = false,
+-- },
+{ 
+    'fedepujol/move.nvim',
+    event = "VeryLazy",
+    config=function ()
+      require('move').setup({})
+    end,
+},
+{'ctrlpvim/ctrlp.vim',event="VeryLazy"},
+{'leoluz/nvim-dap-go',config=function ()
+  require('dap-go').setup {
+    -- Additional dap configurations can be added.
+    -- dap_configurations accepts a list of tables where each entry
+    -- represents a dap configuration. For more details do:
+    -- :help dap-configuration
+    dap_configurations = {
+      {
+        -- Must be "go" or it will be ignored by the plugin
+        type = "go",
+        name = "Attach remote",
+        mode = "remote",
+        request = "attach",
+      },
+    },
+    -- delve configurations
+    delve = {
+      -- the path to the executable dlv which will be used for debugging.
+      -- by default, this is the "dlv" executable on your PATH.
+      path = "dlv",
+      -- time to wait for delve to initialize the debug session.
+      -- default to 20 seconds
+      initialize_timeout_sec = 20,
+      -- a string that defines the port to start delve debugger.
+      -- default to string "${port}" which instructs nvim-dap
+      -- to start the process in a random available port
+      port = "${port}",
+      -- additional args to pass to dlv
+      args = {
+        '--check-go-version=false',
+      },
+      -- the build flags that are passed to delve.
+      -- defaults to empty string, but can be used to provide flags
+      -- such as "-tags=unit" to make sure the test suite is
+      -- compiled during debugging, for example.
+      -- passing build flags using args is ineffective, as those are
+      -- ignored by delve in dap mode.
+      build_flags = "",
+      -- whether the dlv process to be created detached or not. there is
+      -- an issue on Windows where this needs to be set to false
+      -- otherwise the dlv server creation will fail.
+      detached = true
+    },
+  } 
+  end,
+  event = "VeryLazy",
+},
+-- Lua
+-- {
+--   "folke/persistence.nvim",
+--   event = "BufReadPre", -- this will only start session saving when an actual file was opened
+--   opts = {
+--     -- add any custom options here
+--   }
+-- },
+{
+  'rmagatti/auto-session',
+  config = function()
+    require("auto-session").setup {
+      log_level = "error",
+      auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
     }
+  end,
+  lazy=false,
+},
+{
+  "folke/flash.nvim",
+  event = "VeryLazy",
+  ---@type Flash.Config
+  opts = {},
+  -- stylua: ignore
+  keys = {
+    { "<c-f>", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    { "<c-s-f>", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
+},
+{
+  "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("chatgpt").setup()
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
+},
+{
+  'Exafunction/codeium.vim',
+  event = 'BufEnter',
+  config = function ()
+    -- Change '<C-g>' here to any keycode you like.
+    -- vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+    -- vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
+    -- vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
+    -- vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+  end
+}
 
-    return plugins
+}
+
+return plugins

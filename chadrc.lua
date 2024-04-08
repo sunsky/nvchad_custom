@@ -5,7 +5,7 @@ local M = {}
 -- local highlights = require "custom.highlights"
 
 M.ui = {
-  -- theme = "vscode_dark",
+  theme = "tokyonight",
   -- theme = "vscode_dark", -- default/vscode/vscode_colored/minimal
   -- theme_toggle = { "aquarium", "one_light" },
 
