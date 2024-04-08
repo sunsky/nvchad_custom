@@ -13,20 +13,22 @@ local opts = {
 
 M.general = {
   n = {
+    ["<c-s-p>"] = { "<cmd> Telescope find_files <CR>", "Find files" },
     ["<leader>gc"] = {"<cmd>lua require'neogen'.generate()<cr>", "gen comment"},
 
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
     -- ["<leader><leader>fs"] = { '<cmd>lua require("spectre").toggle()<CR>', "toggle Spectre"  },
-    ["<leader>fs"] = {'<cmd>lua require("spectre").open_visual({select_word=true})<CR>',    "Search current word" },
+    -- ["<leader>fs"] = {'<cmd>lua require("spectre").open_visual({select_word=true})<CR>',    "Search current word" },
+    ["<C-S-f>"] = {'<cmd>lua require("spectre").open_visual({select_word=true})<CR>',    "Search current word" },
     -- ["<leader>do"] = {'<cmd>DiffviewOpen<CR>',    "open diffview" },
     -- ["<leader>dc"] = {'<cmd>DiffviewClose<CR>',    "close diffview" },
     ["<leader>fc"] = {'<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',     desc = "Search on current file"},
-["<leader>fd"] = { function() 
-	local builtin = require("telescope.builtin")
-	local utils = require("telescope.utils")
-	builtin.find_files({ cwd = utils.buffer_dir() }) 
-end,
-      desc = "Find files in cwd" },
+    ["<leader>fd"] = { function() 
+      local builtin = require("telescope.builtin")
+      local utils = require("telescope.utils")
+      builtin.find_files({ cwd = utils.buffer_dir() }) 
+    end,
+    desc = "Find files in cwd" },
 
     ["<leader>tf"]={"<cmd>GoTestFunc -v<cr>",  opts=opts},
   },
@@ -160,13 +162,14 @@ keymap("n", "<leader>dt", "<cmd>lua require('dap-go').debug_test()<cr>", opts)
 keymap("n", "<leader>dk", "<cmd>lua require('dapui').eval()<cr>", opts)
 
 -- restore the last session
-vim.api.nvim_set_keymap("n", "<leader>sl", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {})
+-- vim.api.nvim_set_keymap("n", "<leader>sl", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {})
 
 
 -- open file_browser with the path of the current buffer
 -- vim.keymap.set("n", "<space>fp", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
 --
 -- Testing
+
 
 
 

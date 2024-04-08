@@ -69,19 +69,19 @@ local plugins = {
   "mg979/vim-visual-multi",
   lazy = false,
 },
-{
-  "sindrets/diffview.nvim",
-  config = function()
-    require "custom.configs.diffview"
-  end,
-  lazy = false,
-},
+-- {
+--   "sindrets/diffview.nvim",
+--   config = function()
+--     require "custom.configs.diffview"
+--   end,
+--   lazy = false,
+-- },
 {
   "NeogitOrg/neogit",
   dependencies = {
     "nvim-lua/plenary.nvim",         -- required
     "nvim-telescope/telescope.nvim", -- optional
-    "sindrets/diffview.nvim",        -- optional
+    -- "sindrets/diffview.nvim",        -- optional
   },
   -- config = function()
   --   require "custom.configs.neogit"
@@ -230,17 +230,17 @@ local plugins = {
   build = "make install_jsregexp",
   lazy = false
 },
-{
-  "NvChad/nvterm",
-  init = function()
-    require("core.utils").load_mappings "nvterm"
-  end,
-  config = function(_, opts)
-    require "base46.term"
-    require("nvterm").setup(opts)
-  end,
-  lazy = false,
-},
+-- {
+--   "NvChad/nvterm",
+--   init = function()
+--     require("core.utils").load_mappings "nvterm"
+--   end,
+--   config = function(_, opts)
+--     require "base46.term"
+--     require("nvterm").setup(opts)
+--   end,
+--   lazy = false,
+-- },
 {
   'fatih/vim-go',
   lazy = false,
@@ -335,23 +335,23 @@ local plugins = {
       -- For major updates, this must be adjusted manually.
       -- version = "^1.0.0",
     },
-    {
-      'ahmedkhalf/project.nvim',
-      config =function ()
-        require("project_nvim").setup({
-          manual_mode=true,
-            patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-            silent_chdir = false,
-             detection_methods = { --[[ "lsp", ]] "pattern" },
-
-        })
-      end
-    },
+    -- {
+    --   'ahmedkhalf/project.nvim',
+    --   config =function ()
+    --     require("project_nvim").setup({
+    --       manual_mode=true,
+    --         patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+    --         silent_chdir = false,
+    --          detection_methods = { --[[ "lsp", ]] "pattern" },
+    --
+    --     })
+    --   end
+    -- },
   },
   config = function()
     require("telescope").load_extension("live_grep_args")
     require("telescope").load_extension("file_browser")
-    require("telescope").setup()
+    require("custom.configs.telescope")
   end
 },
 {
@@ -601,25 +601,25 @@ require("custom.configs.treesitter-context"),
   -- stylua: ignore
   keys = {
     { "<c-f>", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-    { "<c-s-f>", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "<a-s-f>", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
     -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
   },
 },
-{
-  "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("chatgpt").setup()
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "folke/trouble.nvim",
-      "nvim-telescope/telescope.nvim"
-    }
-},
+-- {
+--   "jackMort/ChatGPT.nvim",
+--     event = "VeryLazy",
+--     config = function()
+--       require("chatgpt").setup()
+--     end,
+--     dependencies = {
+--       "MunifTanjim/nui.nvim",
+--       "nvim-lua/plenary.nvim",
+--       "folke/trouble.nvim",
+--       "nvim-telescope/telescope.nvim"
+--     }
+-- },
 {
   'Exafunction/codeium.vim',
   event = 'BufEnter',
@@ -629,6 +629,13 @@ require("custom.configs.treesitter-context"),
     -- vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
     -- vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
     -- vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+  end
+},
+{'edluffy/hologram.nvim',
+  config = function()
+    require('hologram').setup({
+      auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+    })
   end
 }
 
