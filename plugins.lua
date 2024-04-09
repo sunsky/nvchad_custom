@@ -272,14 +272,6 @@ local plugins = {
   end,
 },
 {
-  'https://github.com/adelarsq/image_preview.nvim',
-  event = 'VeryLazy',
-  config = function()
-    require("image_preview").setup()
-  end,
-  lazy =false,
-},
-{
   "puremourning/vimspector",
   cmd = { "VimspectorInstall", "VimspectorUpdate" },
   fn = { "vimspector#Launch()", "vimspector#ToggleBreakpoint", "vimspector#Continue" },
@@ -324,7 +316,7 @@ local plugins = {
   config = function ()
     require("symbols-outline").setup()
   end,
-  lazy = false,
+  -- lazy = false,
 },
 {
   "nvim-telescope/telescope.nvim",
@@ -371,9 +363,16 @@ require("custom.configs.treesitter-context"),
 {
   "iamcco/markdown-preview.nvim",
   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-  ft = { "markdown" },
+  ft = { "markdown","md" },
   build = function() vim.fn["mkdp#util#install"]() end,
+  config = function()
+      vim.fn["mkdp#util#install"]()
+  end,
 },
+-- {
+--   'preservim/vim-markdown',
+--   event="VeryLazy"
+-- },
 {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = true,

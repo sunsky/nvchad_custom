@@ -3,7 +3,7 @@ local M = {}
 
 
 -- Shorten function name
-local keymap = vim.api.nvim_set_keymap -- vim.keymap.set
+local keymap = vim.keymap.set --vim.api.nvim_set_keymap -- vim.keymap.set
 -- Silent keymap option
 local opts = {
   silent = true,
@@ -171,6 +171,45 @@ keymap("n", "<leader>dk", "<cmd>lua require('dapui').eval()<cr>", opts)
 -- Testing
 
 
+-- Refactor
+vim.keymap.set("x", "<leader>re", ":Refactor extract ")
+vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ")
+
+vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ")
+
+vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var")
+
+vim.keymap.set( "n", "<leader>rI", ":Refactor inline_func")
+
+vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
+vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
+
+
+-- vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+--     pattern = "*",
+--     callback = function()
+--     -- require'symbols-outline'.open_outline()
+--       -- vim.api.nvim_set_keymap("n", "<F9>", ":!echo test<CR>", {silent = false})
+--       -- vim.cmd ":SymbolsOutlineOpen"
+--       vim.cmd ":NvimTreeOpen"
+--     end
+-- })
+
+
+
+-- find search and replace
+keymap("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", opts)
+keymap("n", "<leader>fs", ":lua require('telescope.builtin').lsp_document_symbols({ })<CR>", opts)
+
+
+
+
+function copypath()
+    local path = vim.fn.expand("%:p")
+    vim.notify('Copied "' .. path .. '" to the clipboard!')
+    -- vim.fn.setreg("+", path)
+end
+vim.keymap.set('n', '<leader>cp', copypath, { noremap = true })
 
 
 
