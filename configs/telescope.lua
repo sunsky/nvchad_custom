@@ -60,7 +60,7 @@ telescope.setup {
               -- 'timg', filepath  -- Terminal image viewer command
               'timg','-s', '70', filepath  -- Terminal image viewer command
               -- pip3 install imgcat
-              -- 'catimg', '-w', '32', filepath  -- Terminal image viewer command
+              -- 'catimg', '-w', '128', filepath  -- Terminal image viewer command
             }, 
             {on_stdout=send_output, stdout_buffered=true, pty=true})
         else
