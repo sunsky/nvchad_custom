@@ -20,7 +20,7 @@ telescope.setup {
     media_files = {
       -- filetypes whitelist
       -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = {"png", "webp", "jpg", "jpeg","gif", "pdf","webm"},
+      filetypes = {"png", "webp", "jpg", "jpeg","gif", "pdf","webm","mp4"},
       -- find command (defaults to `fd`)
       find_cmd = "rg"
     }
