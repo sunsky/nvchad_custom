@@ -9,31 +9,41 @@ local opts = {
   silent = true,
   -- nowait = true,
   noremap = true,
-  }
+}
 
 M.general = {
+  i = {
+    ["<C-s>"] = { "<cmd>w<CR>", "Save file" },
+  },
   n = {
+    ["<a-q>"] = {
+      function()
+        require("nvchad.tabufline").close_buffer()
+      end,
+      "Close buffer", },
+    ["<C-s-f>"] = { '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', "Search current word" },
+    ["<c-f>"] = { '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', desc = "Search on current file" },
     ["<c-s-p>"] = { "<cmd> Telescope find_files <CR>", "Find files" },
-    ["<leader>gc"] = {"<cmd>lua require'neogen'.generate()<cr>", "gen comment"},
+    ["<leader>gc"] = { "<cmd>lua require'neogen'.generate()<cr>", "gen comment" },
 
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
     -- ["<leader><leader>fs"] = { '<cmd>lua require("spectre").toggle()<CR>', "toggle Spectre"  },
     -- ["<leader>fs"] = {'<cmd>lua require("spectre").open_visual({select_word=true})<CR>',    "Search current word" },
-    ["<C-S-f>"] = {'<cmd>lua require("spectre").open_visual({select_word=true})<CR>',    "Search current word" },
     -- ["<leader>do"] = {'<cmd>DiffviewOpen<CR>',    "open diffview" },
     -- ["<leader>dc"] = {'<cmd>DiffviewClose<CR>',    "close diffview" },
-    ["<leader>fc"] = {'<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',     desc = "Search on current file"},
-    ["<leader>fd"] = { function() 
-      local builtin = require("telescope.builtin")
-      local utils = require("telescope.utils")
-      builtin.find_files({ cwd = utils.buffer_dir() }) 
-    end,
-    desc = "Find files in cwd" },
+    ["<leader>fd"] = {
+      function()
+        local builtin = require("telescope.builtin")
+        local utils = require("telescope.utils")
+        builtin.find_files({ cwd = utils.buffer_dir() })
+      end,
+      desc = "Find files in cwd"
+    },
 
-    ["<leader>tf"]={"<cmd>GoTestFunc -v<cr>",  opts=opts},
+    ["<leader>tf"] = { "<cmd>GoTestFunc -v<cr>", opts = opts },
   },
   v = {
-    [">"] = { ">gv", "indent"},
+    [">"] = { ">gv", "indent" },
   },
 }
 
@@ -135,7 +145,7 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 -- keymap("n", "<C-o>", ":Telescope fd cwd=~/") -- keymap("n", "<leader>f", ":Telescope current_buffer_fuzzy_find<CR>", opts) -- keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
 -- -- keymap("n", "<leader>fo", ":Telescope live_grep cwd=/home/prashant/Git", opts)
 keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
-keymap("n", "<space>fd", ":Telescope file_browser<CR>", opts)
+keymap("n", "<leader>fd", ":Telescope file_browser<CR>", opts)
 -- keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 --
 -- -- Comment
@@ -144,7 +154,7 @@ keymap("n", "<space>fd", ":Telescope file_browser<CR>", opts)
 
 --
 -- -- DAP
-keymap("n","<leader>ds", ':lua require("dapui").setup();require("dapui").open()<cr>',  opts)
+keymap("n", "<leader>ds", ':lua require("dapui").setup();require("dapui").open()<cr>', opts)
 keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
 keymap("n", "<F7>", "<cmd>lua require'dap'.step_into()<cr>", opts)
 keymap("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts)
@@ -174,13 +184,9 @@ keymap("n", "<leader>dk", "<cmd>lua require('dapui').eval()<cr>", opts)
 -- Refactor
 vim.keymap.set("x", "<leader>re", ":Refactor extract ")
 vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ")
-
 vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ")
-
 vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var")
-
-vim.keymap.set( "n", "<leader>rI", ":Refactor inline_func")
-
+vim.keymap.set("n", "<leader>rI", ":Refactor inline_func")
 vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
 vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
 
@@ -193,22 +199,28 @@ vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
 --       -- vim.cmd ":SymbolsOutlineOpen"
 --       vim.cmd ":NvimTreeOpen"
 --     end
+--
 -- })
-
 
 
 -- find search and replace
 keymap("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", opts)
 keymap("n", "<leader>fs", ":lua require('telescope.builtin').lsp_document_symbols({ })<CR>", opts)
+keymap("n", "<leader>fM", ":lua require('telescope').extensions.media_files.media_files()<CR>", opts)
+
+
+--save
+keymap("i", "<C-s>", "<ESC>:w<CR>", opts)
 
 
 
 
 function copypath()
-    local path = vim.fn.expand("%:p")
-    vim.notify('Copied "' .. path .. '" to the clipboard!')
-    -- vim.fn.setreg("+", path)
+  local path = vim.fn.expand("%:p")
+  vim.notify('Copied "' .. path .. '" to the clipboard!')
+  -- vim.fn.setreg("+", path)
 end
+
 vim.keymap.set('n', '<leader>cp', copypath, { noremap = true })
 
 
