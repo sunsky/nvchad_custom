@@ -41,35 +41,34 @@ local plugins = {
   },
 
   -- override plugin configs
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason,
+  -- {
+  --   "williamboman/mason.nvim",
+    -- opts = overrides.mason,
     -- event="VeryLazy",
     -- lazy = false,
-
-  },
-
-  -- {
-  --   "nvim-treesitter/nvim-treesitter",
-  --   opts = overrides.treesitter,
-  --   config = function ()
-  --     require("custom.configs.treesitter")
-  --   end,
-  --   -- event="VeryLazy",
-  --   lazy = false,
   -- },
 
-
   {
-    "folke/neodev.nvim",
-    config = function()
-      -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
-      require("neodev").setup({
-        -- add any options here, or leave empty to use the default settings
-      })
+    "nvim-treesitter/nvim-treesitter",
+    opts = overrides.treesitter,
+    config = function ()
+      require("custom.configs.treesitter")
     end,
     -- event="VeryLazy",
+    lazy = false,
   },
+
+
+  -- {
+  --   "folke/neodev.nvim",
+  --   config = function()
+  --     -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+  --     require("neodev").setup({
+  --       -- add any options here, or leave empty to use the default settings
+  --     })
+  --   end,
+  --   event="VeryLazy",
+  -- },
   -- Install a plugin
   -- {
   --   "max397574/better-escape.nvim",
@@ -130,7 +129,7 @@ local plugins = {
         library = { plugins = { "nvim-dap-ui" }, types = true },
       })
     end,
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     -- event = "VeryLazy"
 
   },
@@ -140,10 +139,11 @@ local plugins = {
     dependencies = {
       'nvim-lua/plenary.nvim'
     },
+    pin = true,
     config = function()
       require('spectre').setup({ is_block_ui_break = true })
     end,
-    event = "VeryLazy",
+    -- event = "VeryLazy",
   },
   -- {
   --   "L3MON4D3/LuaSnip",
@@ -155,7 +155,7 @@ local plugins = {
   {
     'fatih/vim-go',
     event = "VeryLazy",
-    lazy = false,
+    -- lazy = false,
   },
   -- {
   --   'buoto/gotests-vim',
@@ -194,13 +194,13 @@ local plugins = {
     --   "debuggo",
     -- }
     -- end,
-    event = "VeryLazy",
+    -- event = "VeryLazy",
   },
-  {
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    event = "VeryLazy",
-  },
+  -- {
+  --   "folke/trouble.nvim",
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   event = "VeryLazy",
+  -- },
   { -- extra refactor
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
@@ -210,7 +210,7 @@ local plugins = {
     config = function()
       require("refactoring").setup()
     end,
-    event = "VeryLazy",
+    -- event = "VeryLazy",
   },
   -- {
   --   'nvimdev/lspsaga.nvim',
@@ -221,7 +221,7 @@ local plugins = {
   --     'nvim-treesitter/nvim-treesitter', -- optional
   --     'nvim-tree/nvim-web-devicons'     -- optional
   --   },
-  --   -- event="VeryLazy",
+  --   event="VeryLazy",
   -- },
   {
     'simrat39/symbols-outline.nvim',
@@ -239,18 +239,6 @@ local plugins = {
         -- For major updates, this must be adjusted manually.
         -- version = "^1.0.0",
       },
-      -- {
-      --   'ahmedkhalf/project.nvim',
-      --   config =function ()
-      --     require("project_nvim").setup({
-      --       manual_mode=true,
-      --         patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-      --         silent_chdir = false,
-      --          detection_methods = { --[[ "lsp", ]] "pattern" },
-      --
-      --     })
-      --   end
-      -- },
     },
     config = function()
       require("telescope").load_extension("live_grep_args")
@@ -269,19 +257,19 @@ local plugins = {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
-  require("custom.configs.toggleterm"),
-  require("custom.configs.indentline"),
-  require("custom.configs.treesitter-context"),
+  -- require("custom.configs.toggleterm"),
+  -- require("custom.configs.indentline"),
+  -- require("custom.configs.treesitter-context"),
   -- install without yarn or npm
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown", "md" },
-    build = function() vim.fn["mkdp#util#install"]() end,
-    config = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+  --   ft = { "markdown", "md" },
+  --   build = function() vim.fn["mkdp#util#install"]() end,
+  --   config = function()
+  --     vim.fn["mkdp#util#install"]()
+  --   end,
+  -- },
   -- {
   --   'preservim/vim-markdown',
   --   event="VeryLazy"
@@ -303,16 +291,16 @@ local plugins = {
   -- vim.keymap.set({ "x", "o", "n" }, "W", "<Plug>(leap-from-window)")
   -- end,
   -- },
-  {
-    "kylechui/nvim-surround",
-    -- version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    -- event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end
-  },
+  -- {
+  --   "kylechui/nvim-surround",
+  --   -- version = "*", -- Use for stability; omit to use `main` branch for the latest features
+  --   -- event = "VeryLazy",
+  --   config = function()
+  --     require("nvim-surround").setup({
+  --       -- Configuration here, or leave empty to use defaults
+  --     })
+  --   end
+  -- },
   -- {
   --     "zbirenbaum/neodim",
   --     lazy = true,
@@ -333,45 +321,45 @@ local plugins = {
   --         })
   --     end,
   -- },
-  {
-    "roobert/search-replace.nvim",
-    -- event="VeryLazy",
-    -- lazy = true,
-    cmd = {
-      "SearchReplaceSingleBufferVisualSelection",
-      "SearchReplaceWithinVisualSelection",
-      "SearchReplaceWithinVisualSelectionCWord",
-      "SearchReplaceSingleBufferSelections",
-      "SearchReplaceSingleBufferCWord",
-      "SearchReplaceSingleBufferCWORD",
-      "SearchReplaceSingleBufferCExpr",
-      "SearchReplaceSingleBufferCFile",
-      "SearchReplaceMultiBufferSelections",
-      "SearchReplaceMultiBufferOpen",
-      "SearchReplaceMultiBufferCWord",
-      "SearchReplaceMultiBufferCWORD",
-      "SearchReplaceMultiBufferCExpr",
-      "SearchReplaceMultiBufferCFile",
-    },
-    config = function()
-      require("search-replace").setup({
-        -- optionally override defaults
-        default_replace_single_buffer_options = "gcI",
-        default_replace_multi_buffer_options = "egcI",
-      })
-    end,
-  },
-  { --Syntax aware text-objects, select, move, swap, and peek support.
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = { "nvim-treesitter/nvim-treesitter" }
-  },
-  { --gen commentstring
-    "danymat/neogen",
-    config = true,
-    -- Uncomment next line if you want to follow only stable versions
-    -- version = "*",
-    event = "VeryLazy",
-  },
+  -- {
+  --   "roobert/search-replace.nvim",
+  --   -- event="VeryLazy",
+  --   -- lazy = true,
+  --   cmd = {
+  --     "SearchReplaceSingleBufferVisualSelection",
+  --     "SearchReplaceWithinVisualSelection",
+  --     "SearchReplaceWithinVisualSelectionCWord",
+  --     "SearchReplaceSingleBufferSelections",
+  --     "SearchReplaceSingleBufferCWord",
+  --     "SearchReplaceSingleBufferCWORD",
+  --     "SearchReplaceSingleBufferCExpr",
+  --     "SearchReplaceSingleBufferCFile",
+  --     "SearchReplaceMultiBufferSelections",
+  --     "SearchReplaceMultiBufferOpen",
+  --     "SearchReplaceMultiBufferCWord",
+  --     "SearchReplaceMultiBufferCWORD",
+  --     "SearchReplaceMultiBufferCExpr",
+  --     "SearchReplaceMultiBufferCFile",
+  --   },
+  --   config = function()
+  --     require("search-replace").setup({
+  --       -- optionally override defaults
+  --       default_replace_single_buffer_options = "gcI",
+  --       default_replace_multi_buffer_options = "egcI",
+  --     })
+  --   end,
+  -- },
+  -- { --Syntax aware text-objects, select, move, swap, and peek support.
+  --   "nvim-treesitter/nvim-treesitter-textobjects",
+  --   dependencies = { "nvim-treesitter/nvim-treesitter" }
+  -- },
+  -- { --gen commentstring
+  --   "danymat/neogen",
+  --   config = true,
+  --   -- Uncomment next line if you want to follow only stable versions
+  --   -- version = "*",
+  --   event = "VeryLazy",
+  -- },
   -- {--A modern go neovim plugin based on treesitter, nvim-lsp and dap debugger.
   --   "ray-x/go.nvim",
   --   dependencies = {  -- optional packages
@@ -386,10 +374,10 @@ local plugins = {
   --   ft = {"go", 'gomod'},
   --   build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   -- },
-  { --A Vim wrapper for running tests on different granularities.
-    'vim-test/vim-test',
-    event = "VeryLazy",
-  },
+  -- { --A Vim wrapper for running tests on different granularities.
+  --   'vim-test/vim-test',
+  --   event = "VeryLazy",
+  -- },
   {
     'fedepujol/move.nvim',
     event = "VeryLazy",
@@ -401,62 +389,62 @@ local plugins = {
     'ctrlpvim/ctrlp.vim',
     event = "VeryLazy"
   },
-  {
-    'leoluz/nvim-dap-go',
-    config = function()
-      require('dap-go').setup {
-        -- Additional dap configurations can be added.
-        -- dap_configurations accepts a list of tables where each entry
-        -- represents a dap configuration. For more details do:
-        -- :help dap-configuration
-        dap_configurations = {
-          {
-            -- Must be "go" or it will be ignored by the plugin
-            type = "go",
-            name = "Attach remote",
-            mode = "remote",
-            request = "attach",
-          },
-        },
-        -- delve configurations
-        delve = {
-          -- the path to the executable dlv which will be used for debugging.
-          -- by default, this is the "dlv" executable on your PATH.
-          path = "dlv",
-          -- time to wait for delve to initialize the debug session.
-          -- default to 20 seconds
-          initialize_timeout_sec = 20,
-          -- a string that defines the port to start delve debugger.
-          -- default to string "${port}" which instructs nvim-dap
-          -- to start the process in a random available port
-          port = "${port}",
-          -- additional args to pass to dlv
-          args = {
-            '--check-go-version=false',
-          },
-          -- the build flags that are passed to delve.
-          -- defaults to empty string, but can be used to provide flags
-          -- such as "-tags=unit" to make sure the test suite is
-          -- compiled during debugging, for example.
-          -- passing build flags using args is ineffective, as those are
-          -- ignored by delve in dap mode.
-          build_flags = "",
-          -- whether the dlv process to be created detached or not. there is
-          -- an issue on Windows where this needs to be set to false
-          -- otherwise the dlv server creation will fail.
-          detached = true
-        },
-      }
-    end,
-    -- event = "VeryLazy",
-  },
+  -- {
+  --   'leoluz/nvim-dap-go',
+  --   config = function()
+  --     require('dap-go').setup {
+  --       -- Additional dap configurations can be added.
+  --       -- dap_configurations accepts a list of tables where each entry
+  --       -- represents a dap configuration. For more details do:
+  --       -- :help dap-configuration
+  --       dap_configurations = {
+  --         {
+  --           -- Must be "go" or it will be ignored by the plugin
+  --           type = "go",
+  --           name = "Attach remote",
+  --           mode = "remote",
+  --           request = "attach",
+  --         },
+  --       },
+  --       -- delve configurations
+  --       delve = {
+  --         -- the path to the executable dlv which will be used for debugging.
+  --         -- by default, this is the "dlv" executable on your PATH.
+  --         path = "dlv",
+  --         -- time to wait for delve to initialize the debug session.
+  --         -- default to 20 seconds
+  --         initialize_timeout_sec = 20,
+  --         -- a string that defines the port to start delve debugger.
+  --         -- default to string "${port}" which instructs nvim-dap
+  --         -- to start the process in a random available port
+  --         port = "${port}",
+  --         -- additional args to pass to dlv
+  --         args = {
+  --           '--check-go-version=false',
+  --         },
+  --         -- the build flags that are passed to delve.
+  --         -- defaults to empty string, but can be used to provide flags
+  --         -- such as "-tags=unit" to make sure the test suite is
+  --         -- compiled during debugging, for example.
+  --         -- passing build flags using args is ineffective, as those are
+  --         -- ignored by delve in dap mode.
+  --         build_flags = "",
+  --         -- whether the dlv process to be created detached or not. there is
+  --         -- an issue on Windows where this needs to be set to false
+  --         -- otherwise the dlv server creation will fail.
+  --         detached = true
+  --       },
+  --     }
+  --   end,
+  --   event = "VeryLazy",
+  -- },
   {
     "folke/flash.nvim",
     -- event = "VeryLazy",
     opts = {},
     -- stylua: ignore
     keys = {
-      -- { "<c-f>", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "<a-j>", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
       { "<a-s-f>", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
       -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
       -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
