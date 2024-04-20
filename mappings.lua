@@ -16,6 +16,13 @@ M.general = {
     ["<C-s>"] = { "<cmd>w<CR>", "Save file" },
   },
   n = {
+    ["<c-/>"] = {
+      function()
+        require("Comment.api").toggle.linewise.current()
+      end,
+      "Toggle comment",
+    },
+
     ["<a-q>"] = {
       function()
         require("nvchad.tabufline").close_buffer()
