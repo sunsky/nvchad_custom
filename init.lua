@@ -1,3 +1,7 @@
+--print("config path:"..vim.fn.stdpath("config"))
+
+local vimrc = vim.fn.stdpath("config") .. "/lua/custom/vimrc.vim"
+vim.cmd.source(vimrc)
 
 -- Predefine clipboard provider to speedup start
 
@@ -20,3 +24,12 @@ vim.g["go_test_show_name"] = 1
 
 -- vim.api.nvim_set_var()
 vim.g['test#strategy'] = "neovim"
+
+-- make faster
+vim.o.cursorline = true
+vim.o.lazyredraw = true
+vim.o.synmaxcol = 128
+vim.o.syntaxsyncmaxlines = 256
+
+
+
