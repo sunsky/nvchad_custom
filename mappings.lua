@@ -251,6 +251,7 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 --  lazygit:toggle()
 --end
 
+vim.keymap.set("n", "<leader>co", "<cmd>%bd|e#<cr>", {desc="Close all buffers but the current one"}) -- https://stackoverflow.com/a/42071865/516188
 
 
 
