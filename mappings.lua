@@ -14,6 +14,16 @@ local opts = {
 M.general = {
   i = {
     ["<C-s>"] = { "<cmd>w<CR>", "Save file" },
+    ["<C-d>"] = { "<Esc>ls", "del forward in insert " },
+    ["<c-s-w>"] = { "<Esc>lcw", "del forward word in insert " },
+    ["<a-p>"] = { "<Esc>pi", "paste in insert " },
+    -- ["<a-p>"] = { "<Esc>pi", "paste in insert " },
+    ["<c-/>"] = {
+      function()
+        require("Comment.api").toggle.linewise.current()
+      end,
+      "Toggle comment",
+    },
   },
   n = {
     ["<c-/>"] = {
@@ -48,6 +58,8 @@ M.general = {
     },
 
     ["<leader>tf"] = { "<cmd>GoTestFunc -v<cr>", opts = opts },
+    ["<leader>ta"] = { "<cmd>!gotests -all -w %<cr><cmd>GoTest -v -count 1 <cr>", opts = opts },
+    ["<leader>tad"] = { "<cmd>!gotests -all -w %<cr><cmd>!go test -v ./%/..<cr>", opts = opts },
   },
   v = {
     [">"] = { ">gv", "indent" },
@@ -103,6 +115,7 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 --
 -- -- Better paste
 keymap("v", "p", "P", opts)
+keymap("n", "P", "<Esc>O<Esc>p==", opts)
 --
 -- -- Insert --
 -- -- Press jk fast to switch to Normal mode
@@ -253,6 +266,16 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 vim.keymap.set("n", "<leader>co", "<cmd>%bd|e#<cr>", {desc="Close all buffers but the current one"}) -- https://stackoverflow.com/a/42071865/516188
 
+local function quickfix()
+    vim.lsp.buf.code_action({
+        filter = function(a) return a.isPreferred end,
+        apply = true
+    })
+end
+vim.keymap.set('n', '<leader>qf', quickfix, opts)
+
+vim.keymap.set('i', "<S-Enter>", "<ESC>o", opts)
+vim.keymap.set('n', "<leader>i", "<cmd>IndentBlanklineToggle<cr>", opts)
 
 
 
