@@ -43,15 +43,15 @@ local plugins = {
   -- override plugin configs
   -- {
   --   "williamboman/mason.nvim",
-    -- opts = overrides.mason,
-    -- event="VeryLazy",
-    -- lazy = false,
+  -- opts = overrides.mason,
+  -- event="VeryLazy",
+  -- lazy = false,
   -- },
 
   {
     "nvim-treesitter/nvim-treesitter",
     opts = overrides.treesitter,
-    config = function ()
+    config = function()
       require("custom.configs.treesitter")
     end,
     -- event="VeryLazy",
@@ -59,16 +59,16 @@ local plugins = {
   },
 
 
-  -- {
-  --   "folke/neodev.nvim",
-  --   config = function()
-  --     -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
-  --     require("neodev").setup({
-  --       -- add any options here, or leave empty to use the default settings
-  --     })
-  --   end,
-  --   event="VeryLazy",
-  -- },
+  { --dependency
+    "folke/neodev.nvim",
+    config = function()
+      -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+      require("neodev").setup({
+        -- add any options here, or leave empty to use the default settings
+      })
+    end,
+    event = "VeryLazy",
+  },
   -- Install a plugin
   -- {
   --   "max397574/better-escape.nvim",
@@ -114,7 +114,7 @@ local plugins = {
       -- require("custom.configs.gitblame")
       require('gitblame').setup {
         --Note how the `gitblame_` prefix is omitted in `setup`
-        enabled = true,
+        enabled = false,
       }
     end,
     event = "VeryLazy",
@@ -129,9 +129,7 @@ local plugins = {
         library = { plugins = { "nvim-dap-ui" }, types = true },
       })
     end,
-    -- event = "VeryLazy",
-    -- event = "VeryLazy"
-
+    lazy = false,
   },
   {
     -- quick search and replace
@@ -208,17 +206,17 @@ local plugins = {
     end,
     -- event = "VeryLazy",
   },
-  -- {
-  --   'nvimdev/lspsaga.nvim',
-  --   config = function()
-  --     require('lspsaga').setup({})
-  --   end,
-  --   dependencies = {
-  --     'nvim-treesitter/nvim-treesitter', -- optional
-  --     'nvim-tree/nvim-web-devicons'     -- optional
-  --   },
-  --   event="VeryLazy",
-  -- },
+  {
+    'nvimdev/lspsaga.nvim',
+    config = function()
+      require('lspsaga').setup({})
+    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter', -- optional
+      'nvim-tree/nvim-web-devicons'      -- optional
+    },
+    lazy = false,
+  },
   {
     'simrat39/symbols-outline.nvim',
     config = function()
@@ -255,7 +253,7 @@ local plugins = {
   },
   require("custom.configs.toggleterm"),
   -- require("custom.configs.indentline"),
-  require("custom.configs.treesitter-context"),
+  require("custom.configs.treesitter-context"), --show function name hover
   -- install without yarn or npm
   -- {
   --   "iamcco/markdown-preview.nvim",
@@ -347,7 +345,8 @@ local plugins = {
   -- },
   { --Syntax aware text-objects, select, move, swap, and peek support.
     "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = { "nvim-treesitter/nvim-treesitter" }
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    lazy = false,
   },
   -- { --gen commentstring
   --   "danymat/neogen",
@@ -356,9 +355,9 @@ local plugins = {
   --   -- version = "*",
   --   event = "VeryLazy",
   -- },
-  {--A modern go neovim plugin based on treesitter, nvim-lsp and dap debugger.
+  {                  --A modern go neovim plugin based on treesitter, nvim-lsp and dap debugger.
     "ray-x/go.nvim",
-    dependencies = {  -- optional packages
+    dependencies = { -- optional packages
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
@@ -366,11 +365,11 @@ local plugins = {
     config = function()
       require("go").setup()
     end,
-    event = {"CmdlineEnter"},
-    ft = {"go", 'gomod'},
+    event = { "CmdlineEnter" },
+    ft = { "go", 'gomod' },
     build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   },
-  { --A Vim wrapper for running tests on different granularities.
+  {                                                        --A Vim wrapper for running tests on different granularities.
     'vim-test/vim-test',
     event = "VeryLazy",
   },
@@ -440,7 +439,7 @@ local plugins = {
     opts = {},
     -- stylua: ignore
     keys = {
-      { "<a-s>", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "<a-s>",   mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
       { "<a-s-f>", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
       -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
       -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
@@ -451,9 +450,9 @@ local plugins = {
     'Exafunction/codeium.vim',
     event = 'BufEnter',
     config = function()
-      vim.g.codeium_manual = true
+      -- vim.g.codeium_manual = true
       -- Change '<C-g>' here to any keycode you like.
-      vim.keymap.set('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+      vim.keymap.set('i', '<C-i>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
       vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#Complete']() end, { expr = true, silent = true })
       -- vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
       -- vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
@@ -476,30 +475,134 @@ local plugins = {
     end,
     -- event = "VeryLazy",
   },
-   -- Rainbow Highlighting
-    {
-        -- "HiPhish/nvim-ts-rainbow2",
-        "luochen1990/rainbow",
-        -- event = 'VeryLazy',
-        lazy = false,
-        config=function ()
-          vim.g.rainbow_active=1
-        end
-    },
-    {'ray-x/navigator.lua', dependencies={'neovim/nvim-lspconfig','ray-x/guihua.lua'},
-    config=function()
-      require'navigator'.setup()
-    end,
-    lazy=false,
+  -- Rainbow Highlighting
+  {
+    -- "HiPhish/nvim-ts-rainbow2",
+    "luochen1990/rainbow",
+    -- event = 'VeryLazy',
+    lazy = false,
+    config = function()
+      vim.g.rainbow_active = 1
+    end
   },
-  {'crispgm/nvim-go',dependencies={'nvim-lua/plenary.nvim','neovim/nvim-lspconfig'}, lazy=true},
- {'kevinhwang91/nvim-bqf', lazy=false}, 
- {
-  "ray-x/lsp_signature.nvim",
-  event = "VeryLazy",
-  opts = {},
-  config = function(_, opts) require'lsp_signature'.setup(opts) end
-},
+  --   {'ray-x/navigator.lua', dependencies={'neovim/nvim-lspconfig','ray-x/guihua.lua'},
+  --   config=function()
+  --     require'navigator'.setup()
+  --   end,
+  --   lazy=false,
+  -- },
+  -- {'crispgm/nvim-go',dependencies={'nvim-lua/plenary.nvim','neovim/nvim-lspconfig'}, lazy=true},
+  -- {'kevinhwang91/nvim-bqf', lazy=false},
+  --  {--hint function args
+  --   "ray-x/lsp_signature.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  --   config = function(_, opts) require'lsp_signature'.setup(opts) end
+  -- },
+  --  {
+  --   "michaelb/sniprun",
+  --   branch = "master",
+  --   build = "sh install.sh",
+  --   -- do 'sh install.sh 1' if you want to force compile locally
+  --   -- (instead of fetching a binary from the github release). Requires Rust >= 1.65
+  --
+  --   config = function()
+  --     require("sniprun").setup({
+  --     -- your options
+  --     })
+  --   end,
+  --   lazy=true,
+  -- },
+  {
+    "google/executor.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      -- your setup here
+      require("executor").setup({})
+    end,
+    lazy = false,
+  },
+  { -- This plugin
+    "Zeioth/compiler.nvim",
+    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+    dependencies = { "stevearc/overseer.nvim" },
+    opts = {},
+  },
+  { -- The task runner we use
+    "stevearc/overseer.nvim",
+    commit = "68a2d344cea4a2e11acfb5690dc8ecd1a1ec0ce0",
+    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+    opts = {
+      task_list = {
+        direction = "bottom",
+        min_height = 25,
+        max_height = 25,
+        default_detail = 1
+      },
+    },
+  },
+  {
+    'nvim-java/nvim-java',
+    dependencies = {
+      'nvim-java/lua-async-await',
+      'nvim-java/nvim-java-refactor',
+      'nvim-java/nvim-java-core',
+      'nvim-java/nvim-java-test',
+      'nvim-java/nvim-java-dap',
+      'MunifTanjim/nui.nvim',
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+      {
+        'williamboman/mason.nvim',
+        opts = {
+          registries = {
+            'github:nvim-java/mason-registry',
+            'github:mason-org/mason-registry',
+          },
+        },
+      }
+    },
+    config = function()
+      require('java').setup()
+      require('lspconfig').jdtls.setup({})
+    end,
+    lazy = false,
+  },
+  {
+    'mfussenegger/nvim-jdtls',
+    lazy = false,
+  },
+  -- {
+  --   "gongfeng-copilot",
+  --   -- url = "git@git.woa.com:rockerchen/gongfeng-copilot.git",
+  --   dir = "~/.config/nvim/pack/gongfeng/start/vim",
+  --   lazy = false,
+  --   event = "InsertEnter",
+    -- -- config = function()
+    -- --   vim.keymap.set('i', '<c-a>', function()
+    -- --     return vim.call("copilot#Accept")
+    -- --   end, { expr = true, silent = true })
+    -- -- end,
+    -- keys = {
+    --   {
+    --     "<c-a>",
+    --     function()
+    --       vim.call("copilot#Accept")
+    --     end,
+    --     mode = "i",
+    --     desc = "Accept Copilot Suggestion",
+    --   },
+    -- },
+    -- cond = function()
+    --   local absolute_path = vim.fn.expand("%:p")
+    --   if string.match(absolute_path, "secret") then
+    --     return false
+    --   end
+    --   return true
+    -- end,
+  -- },
 }
 
 return plugins

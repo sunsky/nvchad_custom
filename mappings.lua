@@ -26,6 +26,13 @@ M.general = {
     },
   },
   n = {
+    ["<leader>ra"] = {
+      ":Lspsaga rename<cr>",
+      "LSP rename",
+    },
+
+
+    ["<leader>gr"] = {"<cmd>Lspsaga finder<CR>", "find usage",opts=opts },
     ["<c-/>"] = {
       function()
         require("Comment.api").toggle.linewise.current()
@@ -276,9 +283,18 @@ vim.keymap.set('n', '<leader>qf', quickfix, opts)
 
 vim.keymap.set('i', "<S-Enter>", "<ESC>o", opts)
 vim.keymap.set('n', "<leader>i", "<cmd>IndentBlanklineToggle<cr>", opts)
+vim.keymap.set('n', "<leader>sb", "v$%<CR>", opts)
+vim.keymap.set('n', "<leader>gb", ":GitBlameToggle<CR>", opts)
+-- Open compiler
+vim.api.nvim_set_keymap('n', '<F6>', "<cmd>CompilerOpen<cr>", { noremap = true, silent = true })
 
+-- Redo last selected option
+vim.api.nvim_set_keymap('n', '<S-F6>',
+     "<cmd>CompilerStop<cr>" -- (Optional, to dispose all tasks before redo)
+  .. "<cmd>CompilerRedo<cr>",
+ { noremap = true, silent = true })
 
-
-
+-- Toggle compiler results
+vim.api.nvim_set_keymap('n', '<S-F7>', "<cmd>CompilerToggleResults<cr>", { noremap = true, silent = true })
 
 return M
